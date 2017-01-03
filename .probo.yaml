@@ -1,4 +1,10 @@
 steps:
-  - name: Test Connection
+  - name: Composer Install
     plugin: Shell
-    command: 'print "Hello World!"'
+    command: 'cd $SRC_DIR; composer self-update 1.2.2; composer install --no-dev --prefer-dist -o'
+  - name: Provision Drupal
+    plugin: Drupal
+    runInstall: standard
+    installArgs: "--site-name='Drupal 7 CI' --account-pass=admin!@#"
+    subDirectory: web
+    drupalVersion: 7
